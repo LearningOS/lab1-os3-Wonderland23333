@@ -1,8 +1,8 @@
-//! File and filesystem-related syscalls
+// File and filesystem-related syscalls
 
 const FD_STDOUT: usize = 1;
 
-// YOUR JOB: 修改 sys_write 使之通过测试
+// Your job: fix the `sys_write` make the test pass
 pub fn sys_write(fd: usize, buf: *const u8, len: usize) -> isize {
     match fd {
         FD_STDOUT => {

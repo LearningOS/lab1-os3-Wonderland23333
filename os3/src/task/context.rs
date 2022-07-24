@@ -1,4 +1,4 @@
-//! Implementation of [`TaskContext`]
+//! Implementation of `TaskContext`
 
 #[derive(Copy, Clone)]
 #[repr(C)]
