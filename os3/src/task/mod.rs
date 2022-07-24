@@ -324,11 +324,14 @@ impl TaskManager {
     fn set_task_info(&self, taskinfo: *mut TaskInfo) {
         let inner = self.inner.exclusive_access();
         let t = (get_time() - inner.tasks[inner.current_task].task_begin_time)*1000/CLOCK_FREQ;
-            *taskinfo = TaskInfo {
+        unsafe{
+                *taskinfo = TaskInfo {
                 status: TaskStatus::Running,
                 syscall_times: inner.tasks[inner.current_task].syscall_times,
                 time: t,
             };
+        }
+
     }
 }
 
