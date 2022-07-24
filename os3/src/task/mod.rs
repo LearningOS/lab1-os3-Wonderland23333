@@ -212,6 +212,12 @@ pub struct TaskManager {
 struct TaskManagerInner {
     /// task list
     tasks: [TaskControlBlock; MAX_APP_NUM],
+    /*pub struct TaskControlBlock {
+    pub task_status: TaskStatus,
+    pub task_cx: TaskContext,
+    pub task_begin_time: usize,
+    pub syscall_times: [u32; MAX_SYSCALL_NUM],
+}*/
     /// id of current `Running` task
     current_task: usize,
 }
@@ -308,23 +314,21 @@ impl TaskManager {
     }
 
     // LAB1: Try to implement your function to update or get task info!
+    /// renew task times
     fn update_syscall_times(&self, syscall_id: usize) {
         let mut inner = self.inner.exclusive_access();
         let index = inner.current_task;
         inner.tasks[index].syscall_times[syscall_id] += 1;
     }
+    ///set TaskInfo
     fn set_task_info(&self, taskinfo: *mut TaskInfo) {
         let inner = self.inner.exclusive_access();
         let t = (get_time() - inner.tasks[inner.current_task].task_begin_time)*1000/CLOCK_FREQ;
-        // print!("{}", t);
-        unsafe {
             *taskinfo = TaskInfo {
-                // status: inner.tasks[inner.current_task].task_status,
                 status: TaskStatus::Running,
                 syscall_times: inner.tasks[inner.current_task].syscall_times,
                 time: t,
             };
-        }
     }
 }
 

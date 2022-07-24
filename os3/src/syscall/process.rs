@@ -10,7 +10,7 @@ pub struct TimeVal {
     pub sec: usize,
     pub usec: usize,
 }
-
+///TaskInfo location
 pub struct TaskInfo {
     pub status: TaskStatus,
     pub syscall_times: [u32; MAX_SYSCALL_NUM],
@@ -44,7 +44,6 @@ pub fn sys_get_time(ts: *mut TimeVal, _tz: usize) -> isize {
 
 /// YOUR JOB: Finish sys_task_info to pass testcases
 pub fn sys_task_info(ti: *mut TaskInfo) -> isize {
-    // -1
     set_task_info(ti);
     0
 }
