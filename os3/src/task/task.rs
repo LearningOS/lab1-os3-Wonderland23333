@@ -1,6 +1,7 @@
 //! Types related to task management
 
 use super::TaskContext;
+use crate::config::MAX_SYSCALL_NUM;
 
 #[derive(Copy, Clone)]
 /// task control block structure
@@ -17,4 +18,18 @@ pub enum TaskStatus {
     Ready,
     Running,
     Exited,
+}
+
+#[derive(Copy, Clone)]
+pub struct TaskInfo {
+    pub status: TaskStatus,
+    pub syscall_times: [u32; MAX_SYSCALL_NUM],
+    pub time: usize,
+}
+
+#[repr(C)]
+#[derive(Debug)]
+pub struct TimeVal {
+    pub sec: usize,
+    pub usec: usize,
 }
